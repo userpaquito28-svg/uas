@@ -3,16 +3,29 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-try {
-    $dsn = "mysql:host=" . getenv("MYSQLHOST") . 
-           ";dbname=" . getenv("MYSQLDATABASE") . 
-           ";port=" . getenv("MYSQLPORT");
+// Ambil environment variables
+$host = getenv("MYSQLHOST");
+$db   = getenv("MYSQLDATABASE");
+$user = getenv("MYSQLUSER");
+$pass = getenv("MYSQLPASSWORD");
+$port = getenv("MYSQLPORT");
 
-    $conn = new PDO($dsn, getenv("MYSQLUSER"), getenv("MYSQLPASSWORD"));
+// Buat koneksi
+$conn = new mysqli($host, $user, $pass, $db, $port);
 
-    // Set mode error ke exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
+// Cek koneksi
+if ($conn->connect_error) {
+    die("Koneksi database gagal: " . $conn->connect_error);
 }
+
+// Contoh query
+$result = $conn->query("SELECT NOW() AS currentTime");
+if ($result) {
+    $row = $result->fetch_assoc();
+    echo "Waktu sekarang: " . $row['currentTime'];
+} else {
+    echo "Query gagal: " . $conn->error;
+}
+
+// Tutup koneksi jika sudah selesai
+$conn->close();
