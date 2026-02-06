@@ -1,17 +1,13 @@
 <?php
-
-$host = getenv('MYSQLHOST');
-$user = getenv('MYSQLUSER');
-$pass = getenv('MYSQLPASSWORD');
-$db   = getenv('MYSQLDATABASE');
-
-// Koneksi ke MySQL
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $conn = new PDO(
+        "mysql:host=" . getenv('MYSQL_HOST') . ";dbname=" . getenv('MYSQL_DATABASE'),
+        getenv('MYSQL_USER'),
+        getenv('MYSQL_PASSWORD')
+    );
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Database connected using PDO!";
+} catch(PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
-
-echo "Database connected!";
 ?>
