@@ -3,15 +3,19 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$conn = mysqli_connect(
-    getenv("MYSQLHOST"),
-    getenv("MYSQLUSER"),
-    getenv("MYSQLPASSWORD"),
-    getenv("MYSQLDATABASE"),
-    getenv("MYSQLPORT")
-);
+try {
+    // Buat DSN (Data Source Name)
+    $dsn = "mysql:host=" . getenv("MYSQLHOST") . 
+           ";dbname=" . getenv("MYSQLDATABASE") . 
+           ";port=" . getenv("MYSQLPORT");
 
-if (!$conn) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
+    // Buat koneksi PDO
+    $conn = new PDO($dsn, getenv("MYSQLUSER"), getenv("MYSQLPASSWORD"));
+
+    // Set error mode ke exception biar mudah debug
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+} catch (PDOException $e) {
+    die("Koneksi database gagal: " . $e->getMessage());
 }
 ?>
