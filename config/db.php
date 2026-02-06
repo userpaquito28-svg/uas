@@ -3,12 +3,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "uas_penilaian";
-
-$conn = mysqli_connect($host, $user, $pass, $db);
+$conn = mysqli_connect(
+    getenv("MYSQLHOST"),
+    getenv("MYSQLUSER"),
+    getenv("MYSQLPASSWORD"),
+    getenv("MYSQLDATABASE"),
+    getenv("MYSQLPORT")
+);
 
 if (!$conn) {
     die("Koneksi database gagal: " . mysqli_connect_error());
