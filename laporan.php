@@ -220,18 +220,12 @@ $modals = [];
                                 </table>
                             </div>
                         </div>
-
-                        <div class="card-footer">
-                            <small class="text-muted">* Pagination bisa ditambah belakangan (optional)</small>
-                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-
-    <?php include 'footer.php'; ?>
 </main>
 
 <!-- Modal Tambah Nilai -->

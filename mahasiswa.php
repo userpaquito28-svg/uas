@@ -180,10 +180,6 @@ $qMhs = mysqli_query($conn, "SELECT * FROM mahasiswa $where ORDER BY kelas ASC, 
                                     </table>
                                 </div>
                             </div>
-
-                            <div class="card-footer">
-                                <small class="text-muted">* Pagination bisa ditambah belakangan (optional)</small>
-                            </div>
                         </div>
                     </div>
 
@@ -191,8 +187,6 @@ $qMhs = mysqli_query($conn, "SELECT * FROM mahasiswa $where ORDER BY kelas ASC, 
             </div>
 
         </div>
-
-        <?php include 'footer.php'; ?>
     </main>
 
     <!-- Modal Tambah Mahasiswa -->
